@@ -12,7 +12,7 @@ app.get("/", (req, res) => {
 
 
 app.get('/info', (req, res) => {
-  const ambiente = process.env.AMBIENTE || 'AMBIENTE-SIN-ESPECIFICAR';
+  const ambiente = process.env.NODE_ENV || 'AMBIENTE-SIN-ESPECIFICAR';
   res.send(ambiente);
 });
 
