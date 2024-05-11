@@ -2,14 +2,13 @@ name: proyecto-devops
 services:
    Tarea3:
      image: localhost:8082/proyecto-devops
-     restart: allways
+     restart: always
      ports:
       - 3000:3000
      volumes:
       - /tmp/ficheros-contenedor:/var/ficheros
      environment:
       - NODE_ENV=development
-      - API_KEY=/run/secrets/api-key
      secrets:
       - api-key
 secrets:
