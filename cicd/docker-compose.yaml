@@ -1,6 +1,17 @@
 name: proyecto-devops
 services:
-   backend:
-     image: 
+   Tarea3:
+     image: localhost:8082/proyecto-devops
+     restart: allways
+     ports:
+      - 3000:3000
+     volumes:
+      - /tmp/ficheros-contenedor:/var/ficheros
      environment:
+      AMBIENTE: dev
+      API_KEY: /run/secrets/api-key
      secrets:
+      - api-key
+secrets:
+    api-key:
+      file: api-key.txt

@@ -1,5 +1,7 @@
 import express from "express";
 import { dividir, multiplicar, restar, sumar } from "./calcular.js";
+import fs from 'node:fs';
+
 
 const app = express();
 app.use(express.json());
@@ -7,6 +9,19 @@ app.use(express.json());
 app.get("/", (req, res) => {
   res.send("hola mundo");
 });
+
+
+app.get('/info', (req, res) => {
+  const ambiente = process.env.AMBIENTE || 'AMBIENTE-SIN-ESPECIFICAR';
+  res.send(ambiente);
+});
+
+
+app.get('/api', (req, res) => {
+  const apiKey = fs.readFileSync('/run/secrets/api-key', 'utf-8') || 'API_KEY-NO-ENCONTRADA';
+  res.send(apiKey);
+});
+
 
 app.post("/calcular", (req, res) => {
   const operacion = req.body;

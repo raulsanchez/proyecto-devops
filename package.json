@@ -5,10 +5,10 @@
   "main": "index.ts",
   "type": "module",
   "scripts": {
-    "prebuild": "rimraf dist",
-    "build": "tsc",
-    "test": "jest",
-    "dev": "tsx watch src/index.ts"
+    "build": "tsc --build",
+    "start": "npm run build && node --es-module-specifier-resolution=node dist/index.js",
+    "test": "npm run build && jest --detectOpenHandles",
+    "test:coverage": "jest --coverage"
   },
   "author": "",
   "license": "ISC",
