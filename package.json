@@ -7,7 +7,7 @@
   "scripts": {
     "build": "tsc --build",
     "start": "npm run build && node --es-module-specifier-resolution=node dist/index.js",
-    "test": "npm run build && jest --detectOpenHandles",
+    "test": "jest --coverage",
     "test:coverage": "jest --coverage"
   },
   "author": "",
