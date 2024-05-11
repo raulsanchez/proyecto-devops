@@ -8,8 +8,8 @@ services:
      volumes:
       - /tmp/ficheros-contenedor:/var/ficheros
      environment:
-      AMBIENTE: dev
-      API_KEY: /run/secrets/api-key
+      - AMBIENTE=dev
+      - API_KEY=/run/secrets/api-key
      secrets:
       - api-key
 secrets:

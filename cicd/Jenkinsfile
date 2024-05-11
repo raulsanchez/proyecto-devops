@@ -3,7 +3,10 @@ pipeline {
     stages {
         stage('node pipeline') {
             agent {
-                docker { image 'node:20.11.1-alpine3.19' }
+                docker {
+                    image 'node:20.11.1-alpine3.19'
+                    reuseNode true
+                }
             }
             stages {
                 stage('instalar dependencias') {
@@ -12,14 +15,26 @@ pipeline {
                     }
                 }
                 stage('ejecutar tet') {
-                  steps {
-                    sh 'npm run test'
-                  }
+                    steps {
+                        sh 'npm run test'
+                    }
                 }
                 stage('hacer build') {
-                  steps {
-                    sh 'npm run build'
-                  }
+                    steps {
+                        sh 'npm run build'
+                    }
+                }
+            }
+        }
+        stage('delivery docker') {
+            steps {
+                script {
+                    docker.withRegistry('http://localhost:8082', 'nexus-key') {
+                        sh 'docker build -t localhost:8082/proyecto-devops .'
+                        sh "docker tag localhost:8082/proyecto-devops localhost:8082/proyecto-devops:${env.BRANCH_NAME}-${env.BUILD_NUMBER}"
+                        sh 'docker push localhost:8082/proyecto-devops'
+                        sh "docker push localhost:8082/proyecto-devops:${env.BRANCH_NAME}-${env.BUILD_NUMBER}"
+                    }
                 }
             }
         }
